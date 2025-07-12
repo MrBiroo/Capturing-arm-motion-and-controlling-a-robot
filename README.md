@@ -19,7 +19,7 @@ It was developed and implemented in Syria as part of my graduation project at th
 - 🎮 Wireless communication between sensor suit and control system
 - 🔧 Robotic arm with 7 DOF and neck with 3 DOF
 - 📊 Live motion visualization in Blender
-- 🧭 Sensor fusion and filtering (quaternions, complementary)
+- 🧭 Sensor fusion and filtering (kalman, complementary)
 - ⚡ Mixed actuator control: servo motors, BLDC motors (FOC), and potentiometers
 
 ---
