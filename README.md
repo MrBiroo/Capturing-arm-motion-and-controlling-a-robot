@@ -2,7 +2,6 @@
 
 A 7-degree-of-freedom robotic arm and 3-DOF robotic neck controlled using real-time human motion capture. Built as part of my university graduation project in Mechatronics Engineering.
 
-![Project Demo](images/demo.gif) <!-- Add your own demo gif or photo here -->
 
 ---
 
