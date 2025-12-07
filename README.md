@@ -94,10 +94,14 @@ Data parsing and kinematics
 
 ## Authors and affiliation
 
-- Project: Capturing-Arm-Motion
-- Contributors: Initial scaffolding by the Capturing-Arm-Motion team
-- University / Lab: [Your University / Lab Name]
-- For inquiries or contributions, open an issue or submit a pull request once the repository is hosted on GitHub.
+Baraa Akbik
+Ahmad Malas
+
+Supervisors:
+Dr. Eng. Abd Alrazzak Dabbour
+Dr. Eng. Ulfat Joulha
+
+University of Kalamoon – 2025
 
 License
 - Add an appropriate license file when ready (e.g., MIT, Apache-2.0). This repository currently contains placeholders and is intended for educational and collaborative development.
