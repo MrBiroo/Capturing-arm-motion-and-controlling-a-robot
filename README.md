@@ -1,68 +1,103 @@
-# Capturing Arm Motion – Motion Capture & 7-DOF Humanoid Robotic Arm
+# Capturing-Arm-Motion
 
-## Overview
-Capturing Arm Motion is a mechatronics graduation project integrating a real-time motion-capture system with a 7-DOF humanoid robotic arm. The project captures human arm motion via wearable sensors and IMUs, transmits pose data to a controller, visualizes the motion in Blender, and commands a custom-designed humanoid arm with a modular gearbox and differential wrist.
+Project Capturing-Arm-Motion brings together hardware design, embedded firmware, visualization, and analysis tools to capture human arm motion and drive a robotic arm model in real-time. The repository is organized to separate CAD and mechanical design, embedded firmware for IMU-based capture, electronics schematics and protocol documentation, visualization and control scripts (Blender, MATLAB), kinematics utilities, and data parsing utilities.
 
-## Key Features
-- Real-time motion capture using ESP32-based sensor nodes and a lightweight communication protocol.
-- Live visualization and control integration with Blender for simulation and operator feedback.
-- 7-DOF humanoid robotic arm hardware design with modular gearbox, finger mechanisms, and a differential wrist.
-- MATLAB Simscape models for system-level simulation and validation.
-- Data parsing tools for translating motion capture streams into kinematic commands.
+## Project overview
 
-## Repository Structure
-- hardware/
-  - CAD/ — 3D CAD files and assemblies (placeholders).
-  - Gearbox/ — Gearbox design files and BOM (placeholders).
-  - Finger_Mechanisms/ — Finger and gripper subassemblies (placeholders).
-  - Wrist_Differential/ — Differential wrist mechanism files (placeholders).
-- electronics/
-  - ESP32_Firmware/ — Firmware for motion-capture sensor nodes and communication (placeholder + sample).
-  - Schematics/ — Electronics schematics, PCB board files (placeholders).
-  - Communication_Protocol/ — Protocol definition, message formats (placeholders).
-- software/
-  - blender/ — Blender scripts for visualization and real-time control (contains real_time_control.py).
-  - matlab/ — MATLAB / Simscape models and entry scripts (contains main_simscape.m).
-  - kinematics/ — Kinematics and dynamics functions (contains forward_kinematics.m).
-  - data_parsing/ — Parser utilities to convert sensor streams to robot commands (contains parser.py).
+Capturing-Arm-Motion is a modular multi-disciplinary project to:
+- Capture arm motion using distributed IMUs and an ESP32-based module.
+- Transmit packetized orientation/acceleration data over UDP to a host.
+- Parse incoming IMU packets and map them to a virtual armature in Blender for visualization and recording.
+- Provide MATLAB Simscape entry points for physics-based simulation and stress analysis.
+- Maintain hardware design artifacts for eventual physical build (CAD, gearbox, finger mechanisms, wrist differential).
+
+This repository holds prototypes, placeholders, and reference implementations to bootstrap development and collaboration.
+
+## Features
+
+- Motion capture
+  - IMU sampling on ESP32
+  - Lightweight packet protocol carried over UDP
+- Visualization
+  - Real-time Blender armature mapping and playback
+- Robotic arm
+  - Kinematics utilities for forward kinematics
+  - MATLAB Simscape entry script for simulation and analysis
+- Project artifacts
+  - CAD and mechanical design placeholders
+  - Schematics and communication protocol specification directory
+
+## Repository structure
+
+Top-level:
+- hardware/ — mechanical and CAD assets
+  - CAD/
+  - Gearbox/
+  - Finger_Mechanisms/
+  - Wrist_Differential/
+- electronics/ — firmware and electronics
+  - ESP32_Firmware/
+    - esp32_firmware.ino — example firmware (placeholder)
+  - Schematics/
+  - Communication_Protocol/
+- software/ — visualization, parsing, kinematics, and sim scripts
+  - blender/
+    - real_time_control.py — Blender UDP listener and mapping (placeholder)
+  - matlab/
+    - main_simscape.m — MATLAB entry script (placeholder)
+  - kinematics/
+    - forward_kinematics.m — function header for FK
+  - data_parsing/
+    - parser.py — packet decoding utilities (placeholder)
 - docs/
-  - Stress_Analysis/ — Simulation results and FEA reports (placeholders).
+  - Stress_Analysis/ — future stress analysis documents
+- README.md — this file
+- init_structure.sh — script to recreate this structure locally
 
-Each folder contains a .keep file so Git tracks empty directories.
+Each folder contains a `.keep` file to ensure Git tracks empty directories in initial commits.
 
-## How to run the system (high-level)
-1. ESP32 firmware
-   - Flash the provided ESP32 firmware (located in electronics/ESP32_Firmware/) onto each sensor node using the Arduino IDE or PlatformIO.
-   - Configure Wi-Fi / UDP settings in the firmware header to point to the controller PC IP and port.
-   - Start the sensor nodes; they will stream motion data using the defined communication protocol.
+## How to run components (quick start)
 
-2. Blender visualization and control
-   - Open Blender and install the provided real-time control script (software/blender/real_time_control.py).
-   - Run the script to open a UDP/TCP listener that receives motion data and maps it to the arm rig.
-   - Use Blender's timeline and visualization tools to verify motion before commanding the real robot.
+Important: The files in this repository are initial placeholders. Use them as a starting point for development.
 
-3. MATLAB Simscape
-   - Open MATLAB and run software/matlab/main_simscape.m to initialize the Simscape model.
-   - Use the Simscape model for dynamic validation, trajectory testing, and closed-loop controller tuning.
+ESP32 firmware (esp32_firmware.ino)
+- Open `electronics/ESP32_Firmware/esp32_firmware.ino` in the Arduino IDE or PlatformIO.
+- Install board support for an ESP32 (e.g., Espressif ESP32 in the Board Manager).
+- Configure WiFi SSID, password, target host IP and target UDP port in the sketch.
+- Compile and flash to your ESP32.
+- The placeholder sketch demonstrates reading IMUs, packing data, and sending via UDP. Replace IMU code with your chosen sensor library (e.g., Adafruit LSM6DS/MPU9250/ICM20948).
 
-4. Data parsing and kinematics
-   - The software/data_parsing/parser.py contains utilities to validate and translate incoming sensor packets to joint-space trajectories.
-   - Kinematic math (forward & inverse) is provided in software/kinematics/ to compute joint references for the 7-DOF arm.
+Blender script (software/blender/real_time_control.py)
+- This script is intended to run inside Blender's embedded Python interpreter (bpy).
+- Open Blender, switch to the "Scripting" workspace, and open the script.
+- The script contains a UDP listener scaffold; adapt packet parsing and bone naming to your armature.
+- To run headless (for recording), run Blender with: blender --background --python software/blender/real_time_control.py
 
-## Development & Contribution Workflow
-- Branch from main for feature work and open PRs with clear descriptions.
-- Follow the coding conventions of each language (Python PEP8, MATLAB function headers, Arduino/ESP32 style).
-- Include simulation logs and CAD export PDFs in docs/ for reproducibility.
+MATLAB / Simscape (software/matlab/main_simscape.m)
+- Open MATLAB and set the path to the repository root.
+- Open `software/matlab/main_simscape.m`.
+- The placeholder script outlines starting the Simscape model and interfacing data.
+- Customize the script to load your Simscape model file (.slx) and tune simulation parameters.
 
-## Future Improvements
-- Add complete hardware CAD exports (STEP/IGES) and annotated BOMs for manufacturing.
-- Implement robust inverse kinematics with singularity handling and redundancy resolution for the 7-DOF arm.
-- Add encrypted, authenticated communication between sensor nodes and controller.
-- Implement embedded safety features and a hardware abstraction layer for multiple end-effectors.
-- Continuous integration for firmware build checks and automated Simscape test runs.
+Data parsing and kinematics
+- `software/data_parsing/parser.py` contains packet decoding helpers — integrate with your network listener or Blender script.
+- `software/kinematics/forward_kinematics.m` is a header for a forward kinematics function. Implement your robot's kinematic chain and test with unit cases.
 
-## Authors
-- Baraa Akbik
-- Ahmad Malas
+## Future improvements
 
-University of Kalamoon – 2025
+- Implement robust packet framing with CRC and sequence numbers.
+- Secure communication (authenticated/encrypted) or TLS tunneling for remote streaming.
+- Add calibration routines for IMUs (orientation drift compensation and sensor fusion).
+- Implement inverse kinematics and an actuator control stack to drive a physical robotic arm.
+- Add CI checks, unit tests for parser/kinematics, and simulation-based validation.
+- Populate hardware CAD, BOMs, and detailed electronics schematics.
+
+## Authors and affiliation
+
+- Project: Capturing-Arm-Motion
+- Contributors: Initial scaffolding by the Capturing-Arm-Motion team
+- University / Lab: [Your University / Lab Name]
+- For inquiries or contributions, open an issue or submit a pull request once the repository is hosted on GitHub.
+
+License
+- Add an appropriate license file when ready (e.g., MIT, Apache-2.0). This repository currently contains placeholders and is intended for educational and collaborative development.
